@@ -204,6 +204,26 @@ let maximumFrequency: Double = (k.min ... k.max).map {
 For accumulations that don’t mutate collections, you can also use an ordinary `reduce(_:_:)`.
 
 
+## Object-oriented code
+
+### Explicit `self`
+
+When writing instance members, always refer to other instance members with explicit `self`. Static members should be referred to with explicit `Self` (for enum, struct, or protocol members), or the name of the type (for class members).
+
+```swift
+// ✓ CORRECT
+let foo: Int = self.bar
+
+// ✗ INCORRECT
+let foo: Int = bar
+```
+
+In a `static` context, refer to `Self` as `Self`, even though the compiler would also allow it to be spelled as a lowercase `self`.
+
+### Start with `static`
+
+When writing new functions (including subscripts and properties), start with `static` and only upgrade them to instance members if the implementation actually needs to access instance members.
+
 ## Code organization
 
 Place related functionality in extensions:
