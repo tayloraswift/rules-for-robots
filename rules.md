@@ -388,3 +388,31 @@ Use Swift Testing (`import Testing`), not XCTest, which is deprecated.
 
 Always organize Swift Testing tests into suites (`@Suite`).
 
+
+## Common mistakes
+
+In the past, you have generated Swift code that does not compile. Below are some transcripts that describe mistakes to avoid!
+
+
+### 6/24/2025
+
+    Copilot said: Yes, I generated a few compilation errors.
+
+    The main issues were:
+
+    Incorrect string initialization syntax: I wrote .init(repeating: "-", count: columnWidths.value) but Swift requires the type name when using .init for static methods like String's repeating initializer. The correct form is String.init(repeating: "-", count: columnWidths.value).
+
+    Invalid string interpolation: In the printTableRow function, I tried to use .init(value) inside string interpolation with "\(.init(value))" which is incorrect. String interpolation just needs the value directly: "\(value)".
+
+    Type conversion confusion: In a few places I was overzealous with .init() usage for numeric casts, where simply using the value directly would have been more appropriate.
+
+    The Style Guide states that we should use leading dot notation for initializers, but I incorrectly applied this in cases where it doesn't make sense, particularly with string interpolation and certain static initializers.
+
+    These errors demonstrate how important it is to:
+
+    Understand when and where to use the .init pattern correctly
+    Test code before submitting it (which would have caught these issues)
+    Recognize that Style Guide rules need to be applied with understanding of the language's constraints
+
+    Thank you for fixing these errors. It's a good reminder that style guidelines need to be applied with careful attention to what's actually valid Swift code.
+
