@@ -90,7 +90,7 @@ let maximumFrequency: Double = (k.min ... k.max).map {
 
 For accumulations that don’t mutate collections, you can also use an ordinary `reduce(_:_:)`.
 
-## Grouping Variables with Tuples
+## Grouping variables with tuples
 
 Group related variables using tuples with named elements instead of separate variables.
 Swift
