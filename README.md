@@ -93,7 +93,7 @@ case let .coordinates(x, y, z):
 
 ## Naming
 
-### Prefer full words, or single letters.
+### Prefer full words, or single letters
 
 Prefer spelling out complete words, unless the abbreviation is a common standalone term of art, like “min” or “max”. Avoid abbreviating variable or function names.
 
