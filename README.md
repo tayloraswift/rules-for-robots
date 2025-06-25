@@ -93,10 +93,9 @@ case let .coordinates(x, y, z):
 
 ## Naming
 
-### Prefer full words
+### Prefer full words, or single letters.
 
 Prefer spelling out complete words, unless the abbreviation is a common standalone term of art, like “min” or “max”. Avoid abbreviating variable or function names.
-
 
 ```swift
 // ✓ CORRECT
@@ -108,6 +107,26 @@ let max: Double? = values.max()
 let prob: Double = 0.5
 let freq: Double = count / total
 let maximum: Double? = values.max()
+```
+
+Default to single letters like `i` for indices, unless a longer name would provide meaningful clarity.
+
+```swift
+// ✓ CORRECT
+let j: String.Index = string.index(after: i)
+
+// ✗ INCORRECT
+let nextIdx: String.Index = string.index(after: currentIdx)
+```
+
+Default to single letters like `x`, if replicating a well known mathematical formulae.
+
+```swift
+// ✓ CORRECT
+let c: Double = .sqrt(a * a + b * b)
+
+// ✗ INCORRECT
+let hypotenuse: Double = .sqrt(sideOne * sideOne + sideTwo * sideTwo)
 ```
 
 ### Closure parameters
