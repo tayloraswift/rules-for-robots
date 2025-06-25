@@ -1,6 +1,6 @@
-# Swift Style Guidance, for GitHub Copilot
+# Swift Style Guidance, for Google Gemini
 
-This document outlines the key coding conventions that you (GitHub Copilot) should follow when generating Swift code. Only deviate from them if explicitly instructed to.
+This document outlines the key coding conventions that you (Google Gemini) should follow when generating Swift code. Only deviate from them if explicitly instructed to.
 
 ## Visual formatting
 
