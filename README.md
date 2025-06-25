@@ -101,7 +101,8 @@ Prefer spelling out complete words, unless the abbreviation is a common standalo
 // ✓ CORRECT
 let probability: Double = 0.5
 let frequency: Double = count / total
-let max: Double? = values.max()
+// 'max' preferred over 'maximum', because it is a common term of art, despite being an abbreviation
+let max: Double? = values.max() 
 
 // ✗ INCORRECT
 let prob: Double = 0.5
@@ -167,7 +168,7 @@ print("Range: \(minRange) to \(maxRange)")
 
 Use proper mathematical symbols for well-known concepts.
 
-```
+```swift
 // ✓ CORRECT
 let μ: Double = 0.5       // mean
 let σ: Double = 0.7       // standard deviation
