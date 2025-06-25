@@ -22,7 +22,7 @@ This includes variables bound in `for`, `while`, and `if` statements.
 
 ## Prefer full words
 
-Prefer spelling out complete words, unless the abbreviation is a common standalone term of art, like “min” or “max”. Avoid abbreviate variable or function names.
+Prefer spelling out complete words, unless the abbreviation is a common standalone term of art, like “min” or “max”. Avoid abbreviating variable or function names.
 
 
 ```swift
