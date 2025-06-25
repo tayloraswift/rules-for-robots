@@ -24,6 +24,28 @@ for i in 0..<count {
 }
 ```
 
+### Comments
+
+AI agents like yourself often use code comments to explain steps you took. These comments don’t make sense out of the context of a particular chat. Don’t use code comments to explain edits you make, use the chat for that instead. Code you generate should be understandable outside of the context of a particular Copilot conversation.
+
+
+✓ CORRECT:
+
+```md
+Here, I have changed the formula I used to compute `x`!
+```
+```swift
+let x: Double = y + z
+```
+
+
+✗ INCORRECT:
+
+```swift
+// Here, I have changed the formula I used to compute x!
+let x: Double = y + z
+```
+
 ## Literals
 
 Use integer literals for integral floating point values.
