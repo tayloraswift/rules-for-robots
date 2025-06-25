@@ -119,7 +119,7 @@ let j: String.Index = string.index(after: i)
 let nextIdx: String.Index = string.index(after: currentIdx)
 ```
 
-Default to single letters like `x`, if replicating a well known mathematical formulae.
+Default to single letters like `x`, if reproducing well known mathematical formulae.
 
 ```swift
 // ✓ CORRECT
