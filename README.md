@@ -62,18 +62,20 @@ let x: Double = 1.0
 
 ### Type annotations and initializers
 
-Always include explicit type annotations for all local variable bindings. Spell out all initializer calls with explicit '`init`' tokens. Use leading dot notation for initializers.
+Always include explicit type annotations for all local variable bindings. This includes variables bound by destructuring tuples. Spell out all initializer calls with explicit '`init`' tokens. Use leading dot notation for initializers.
 
 ```swift
 // ✓ CORRECT
 let random: PseudoRandom = .init(seed: 3)
 let array: [Int] = .init(repeating: 0, count: 10)
 let value: Double = .init(intValue)
+let (name, age): (String, Int) = ("Alice", 30)
 
 // ✗ INCORRECT
 let random = PseudoRandom(seed: 3)
 let array = [Int](repeating: 0, count: 10)
 let value = Double(intValue)
+let (name, age) = ("Alice", 30)
 ```
 
 ### Interior numeric casts
