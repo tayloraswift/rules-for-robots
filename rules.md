@@ -130,6 +130,68 @@ let c: Double = .sqrt(a * a + b * b)
 let hypotenuse: Double = .sqrt(sideOne * sideOne + sideTwo * sideTwo)
 ```
 
+### Avoid meaningless suffixes
+
+Omit suffixes like `-Value` that add no clarity, or are redundant in the context of static type information.
+
+```swift
+// ✓ CORRECT
+let foo: String = "\(percentage)"
+
+// ✗ INCORRECT
+let fooValue: String = "\(percentage)"
+```
+
+### Binding `self`
+
+Shadow the `self` keyword if something is semantically an instance method, but cannot be expressed as such due to the constraints of the language. Common examples include operator declarations.
+
+```swift
+// ✓ CORRECT
+static func += (self: inout Self, next: Self) {
+}
+
+// ✗ INCORRECT
+static func += (lhs: inout Self, rhs: Self) {
+}
+```
+
+When switching on `enum` variants with payloads, shadow `self` if you are conceptually switching on cases of `self`.
+
+```swift
+// ✓ CORRECT
+switch self {
+case .bool(let self): ...
+case .int(let self): ...
+case .float(let self): ...
+}
+
+// ✗ INCORRECT
+switch self {
+case .bool(let bool): ...
+case .int(let int): ...
+case .float(let float): ...
+}
+```
+
+Only do this for variant-like enums.
+
+```swift
+// ✓ CORRECT
+switch self {
+case .foo(id: let id, let value): ...
+}
+
+// ✗ INCORRECT
+switch self {
+case .foo(id: let self, let value): ...
+}
+```
+
+### Avoid `lhs` and `rhs`
+
+The names `lhs` and `rhs` are terrible parameter names, and should never be used. Use `a` and `b` in binary operator signatures instead.
+
 ### Closure parameters
 
 Prefer shorthand argument names (`$0`, `$1`) for simple closures. Only name parameters in very large closures, or when nested closures require disambiguating outer parameters.
