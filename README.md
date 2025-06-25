@@ -2,9 +2,13 @@
 
 This document outlines the key coding conventions that you (GitHub Copilot) should follow when generating Swift code. Only deviate from them if explicitly instructed to.
 
+## Line length
+
+Adhere to a maximum line length of 96 characters (grapheme clusters). Use multiline string literals to avoid overlong strings.
+
 ## Type annotations and initializers
 
-Always include explicit type annotations for all local variable bindings. Spell out all initializer calls with explicit 'init' tokens. Use leading dot notation for initializers.
+Always include explicit type annotations for all local variable bindings. Spell out all initializer calls with explicit '`init`' tokens. Use leading dot notation for initializers.
 
 ```swift
 // ✓ CORRECT
