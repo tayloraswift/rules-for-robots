@@ -137,7 +137,7 @@ Use Swift Testing (`import Testing`), not XCTest, which is deprecated.
 
 Always organize Swift Testing tests into suites (`@Suite`).
 
-## Code Organization
+## Code organization
 
 Place related functionality in extensions:
 
