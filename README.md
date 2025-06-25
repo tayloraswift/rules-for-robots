@@ -22,7 +22,33 @@ let array = [Int](repeating: 0, count: 10)
 let value = Double(intValue)
 ```
 
+### Loop/expression bindings
+
 This includes variables bound in `for`, `while`, and `if` statements.
+
+```swift
+// ✓ CORRECT
+for x: Int in 0 ... 10 {
+}
+
+// ✗ INCORRECT
+for x in 0 ... 10 {
+}
+```
+
+### Interior numeric casts
+
+Use leading dot notation for initializers when possible, except for interior numeric casts.
+
+```swift
+// ✓ CORRECT
+let x: Double = .init(intValue)
+let y: Double = x + Double.init(z)
+
+// ✗ INCORRECT
+let x: Double = Double.init(intValue)
+let y: Double = x + .init(z)
+```
 
 ## Prefer full words
 
@@ -134,6 +160,21 @@ let variance: Double = 0.49
 Never import `Foundation` unless explicitly instructed to.
 
 This means you *may* need to provide local implementations for common `String` formatting tasks.
+
+
+## Numerics (`RealModule`)
+
+Remember that common mathematical functions in Swift (except for `min`, `max`, and `abs`) are static members on floating point types. A bare `sqrt(x)` call will not compile!
+
+```
+// ✓ CORRECT
+let x: Double = .sqrt(a)
+let y: Double = b + .sin(c)
+
+// ✗ INCORRECT
+let x: Double = sqrt(a)
+let y: Double = b + sin(c)
+```
 
 ## Testing
 
