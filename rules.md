@@ -24,6 +24,18 @@ for i in 0..<count {
 }
 ```
 
+## Literals
+
+Use integer literals for integral floating point values.
+
+```swift
+// ✓ CORRECT
+let x: Double = 1
+
+// ✗ INCORRECT
+let x: Double = 1.0
+```
+
 ## Variables, static typing, and pattern matching
 
 ### Type annotations and initializers
@@ -265,6 +277,24 @@ let maximumFrequency: Double = (k.min ... k.max).map {
 ```
 
 For accumulations that don’t mutate collections, you can also use an ordinary `reduce(_:_:)`.
+
+### Don’t parrot tuple lables
+
+Swift’s type system is capable of propogating tuple labels through unlabeled tuples. Don’t repeat tuple labels if they’re specified from the outside, such as through a variable’s type annotation.
+
+```swift
+// ✓ CORRECT
+let stats: (sum: Double, sumSquares: Double) = samples.reduce(into: (0, 0)) {
+    $0.sum += $1
+    $0.sumSquares += $1 * $1
+}
+
+// ✗ INCORRECT
+let stats: (sum: Double, sumSquares: Double) = samples.reduce(into: (sum: 0.0, sumSquares: 0.0)) {
+    $0.sum += $1
+    $0.sumSquares += $1 * $1
+}
+```
 
 
 ## Object-oriented code
