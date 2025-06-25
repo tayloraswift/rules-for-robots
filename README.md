@@ -94,14 +94,27 @@ let y: Double = x + .init(z)
 
 Always include explicit type annotations for variables bound in `for`, `while`, and `if` statements.
 
+This applies to positions where Swift supports type annotations, including:
+
+- Range-based `for` loops: `for i: Int in 0 ..< count`
+- Collection iteration: `for item: String in items`
+- `if`-`let` bindings: `if let foo: Data = bar`
+
 ```swift
 // ✓ CORRECT
-for x: Int in 0 ... 10 {
-}
+for i: Int in 0 ..< 10 { }
+for item: String in items { }
 
 // ✗ INCORRECT
-for x in 0 ... 10 {
-}
+for i in 0 ..< 10 { }
+for item in items { }
+```
+
+Please note that there are some places that the Swift compiler does not support type annotations, such as in `case .x(let x)` bindings.
+
+```swift
+// ✗ INCORRECT
+case .success(let value: Int): // will not compile!
 ```
 
 ### Pattern binding in switch cases
@@ -129,20 +142,26 @@ case let .coordinates(x, y, z):
 
 ### Prefer full words, or single letters
 
-Prefer spelling out complete words, unless the abbreviation is a common standalone term of art, like “min” or “max”. Avoid abbreviating variable or function names.
+Prefer spelling out complete words, unless the abbreviation is a common standalone term of art, like “min” or “max”. Avoid abbreviating variable or function names. **Always spell out abbreviated compound words.**
 
-```swift
+```
 // ✓ CORRECT
 let probability: Double = 0.5
 let frequency: Double = count / total
-// 'max' preferred over 'maximum', because it is a common term of art, despite being an abbreviation
-let max: Double? = values.max() 
+let relativeError: Double = diff / expected  // NOT "relError"
+let max: Double = values.max() // "max" is acceptable, and preferred over 'maximum', as it’s a term of art, despite being an abbreviation
 
-// ✗ INCORRECT
+// ✗ INCORRECT - Don't abbreviate compound words
 let prob: Double = 0.5
-let freq: Double = count / total
-let maximum: Double? = values.max()
+let freq: Double = count / total  
+let relError: Double = diff / expected       // Should be "relativeError"
 ```
+
+**Common abbreviations to avoid:**
+- `relFoo` → `relativeFoo`
+- `tempFoo` → `temporaryFoo`
+- `numItems` → `items` or `itemCount`
+- `avgFoo` → `averageFoo`
 
 Default to single letters like `i` for indices, unless a longer name would provide meaningful clarity.
 
@@ -228,19 +247,54 @@ The names `lhs` and `rhs` are terrible parameter names, and should never be used
 
 ### Closure parameters
 
-Prefer shorthand argument names (`$0`, `$1`) for simple closures. Only name parameters in very large closures, or when nested closures require disambiguating outer parameters.
+**Always prefer shorthand argument names (`$0`, `$1`) for simple closures**. Only use explicit parameter names in the following cases:
+- Very large closures (>50 lines)
+- Nested closures where you need to disambiguating outer parameters
+- When the closure logic becomes significantly more readable with named parameters
 
 ```swift
 // ✓ CORRECT
 let sum: Double = values.reduce(0, +)
 let squares: Double = values.reduce(0) { $0 + $1 * $1 }
 
-// ✗ INCORRECT
+// ✗ INCORRECT - Don't name parameters in simple closures
 let sum: Double = values.reduce(0) { accumulator, value in accumulator + value }
 let squares: Double = values.reduce(0) { (accumulator, value) in accumulator + value * value }
 ```
 
 If you decide to name a closure parameter, always include a type annotation. It’s okay to omit the return type, if type inference allows for it.
+
+#### Tuple Splatting in Closures
+
+When a closure receives a tuple as its single argument, **prefer splatting the tuple elements into separate shorthand arguments** (`$0`, `$1`, `$2`, etc.) rather than accessing tuple members (`$0.0`, `$0.1`, `$0.2`, etc.).
+
+```swift
+// ✓ CORRECT - Splat tuple elements into $0, $1, $2
+let result = enumerated.map { 
+    ($0, $1 * 2)  // $0 is index, $1 is value
+}
+
+let histogram = items.enumerated().map {
+    let midpoint = range.min + (Double($0) + 0.5) * binWidth  // $0 is index
+    return (midpoint: midpoint, count: $1)                    // $1 is value
+}
+
+// ✗ INCORRECT - Don't access tuple members when you can splat
+let result = enumerated.map { 
+    ($0.0, $0.1 * 2)  // Should use $0, $1
+}
+
+let histogram = items.enumerated().map {
+    let midpoint = range.min + (Double($0.0) + 0.5) * binWidth  // Should use $0
+    return (midpoint: midpoint, count: $0.1)                    // Should use $1
+}
+```
+
+How to identify when tuple splatting applies:
+
+- The closure takes exactly one argument that is a tuple
+- Common cases: `.enumerated().map`, `.zip(...).map`, functions returning tuples
+- If you find yourself writing `$0.0`, `$0.1`, `$0.2`, consider if tuple splatting applies
 
 ### Grouping variables with tuples
 
